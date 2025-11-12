@@ -24,27 +24,32 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-
+                                    <form action="" method="post">
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label for="cedulapersona" class="form-label">Cédula</label>
+                                            <label for="Cédula" class="form-label">Cédula</label>
                                             <input type="number" class="form-control"
-                                                placeholder="Ingrese número de cédula" id="cedulapersona">
+                                                placeholder="Ingrese número de cédula" id="Cédula">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="nombrepersona" class="form-label">Nombre</label>
+                                            <label for="Nombre" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" placeholder="Ingrese nombre"
-                                                id="nombrepersona">
+                                                id="Nombre">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="apellidopersona" class="form-label">Apellido</label>
-                                            <input type="text" class="form-control" placeholder="Ingrese apellidoa"
+                                            <label for="apellido" class="form-label">Apellido</label>
+                                            <input type="text"  class="form-control" placeholder="Ingrese apellidos"
                                                 id="apellidopersona">
                                         </div>
                                         <div class="mb-3">
-                                            <label for="telefonopersona" class="form-label">Teléfono</label>
-                                            <input type="text" class="form-control"
-                                                placeholder="Ingrese número de teléfono" id="telefonopersona">
+                                            <label for="correo" class="form-label">Correo</label>
+                                            <input type="email" class="form-control" placeholder="Ingrese correo"
+                                                id="apellidopersona">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="telefono" class="form-label">Teléfono</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="Ingrese número de teléfono" id="telefono">
                                         </div>
                                     </div>
 
@@ -53,6 +58,7 @@
                                             data-bs-dismiss="modal">Cerrar</button>
                                         <button type="button" class="btn btn-primary">Guardar</button>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -60,34 +66,25 @@
 
                         <thead> 
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Cédula</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011-01-25</td>
-                                <td>$112,000</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
+                        </tbody>                     
                     </table>
                 </div>
             </div>

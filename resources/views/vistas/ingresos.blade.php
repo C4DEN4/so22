@@ -31,6 +31,20 @@
                                             <input type="number" class="form-control"
                                                 placeholder="Ingrese número de cédula" id="cedulapersona">
                                         </div>
+
+                                        <div class="mb-3">
+                                            <label for="areas">Área</label>
+                                            <select class="form-select" id="areas" aria-label="Default select example">
+                                                <option selected>Seleccione area</option>
+                                                <option value="1">One</option>                                              
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="cedulapersona" class="form-label">Motivo</label>
+                                            <input type="number" class="form-control"
+                                                placeholder="Ingrese número de cédula" id="cedulapersona">
+                                        </div>
+
                                     </div>
 
                                     <div class="modal-footer">
@@ -41,37 +55,31 @@
                                 </div>
                             </div>
                         </div>
-                       
-                        <thead> 
+
+                        <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Fecha</th>
+                                <th>Cédula</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Área</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011-01-25</td>
-                                <td>$112,000</td>
+                               
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
+                        
                     </table>
                 </div>
             </div>
