@@ -2,8 +2,22 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <style>
+            a[href="#main"] {
+                display: none;
+            }
+
+            a[href="#navigation"] {
+                display: none;
+            }
+        </style>
+        
     <form method="POST" action="{{ route('login') }}">
         @csrf
+                <center>
+                            <img  src="{{ asset('favicon.ico') }}" style="width: 150px">
+
+                </center>
 
         <!-- Email Address -->
         <div>
