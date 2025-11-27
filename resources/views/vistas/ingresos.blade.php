@@ -6,84 +6,187 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <table id="example" class="display">
-                        <h1 class="text-center">Ingresos</h1>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                            <i class="fas fa-plus"></i>
-                        </button>
+                    <h1 class="text-center">Ingresos</h1>
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-                        {{-- Modal Crear ingreso --}}
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            {{-- Nodal ingreso --}}
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Ingresos</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
+                    <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal"
+                        data-bs-target="#createIngresoModal">
+                        <i class="fas fa-plus"></i> Registrar Ingreso
+                    </button>
 
-                                    <div class="modal-body">
+                    {{-- Modal Crear ingreso (ID cambiado a createIngresoModal) --}}
+                    <div class="modal fade" id="createIngresoModal" tabindex="-1"
+                        aria-labelledby="createIngresoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="createIngresoModalLabel">Registrar Ingreso</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="{{ route('ingresos.store') }}">
+                                        @csrf
                                         <div class="mb-3">
-                                            <label for="cedulapersona" class="form-label">Cédula</label>
-                                            <input type="number" class="form-control"
-                                                placeholder="Ingrese número de cédula" id="cedulapersona">
+                                            <label for="personas_cedula" class="form-label">Cédula</label>
+                                            <input type="number" name="personas_cedula" class="form-control"
+                                                placeholder="Ingrese número de cédula (debe estar registrado en Personas)"
+                                                required value="{{ old('personas_cedula') }}">
                                         </div>
-
                                         <div class="mb-3">
-                                            <label for="areas">Área</label>
-                                            <select class="form-select" id="areas" aria-label="Default select example">
-                                                <option selected>Seleccione area</option>
-                                                <option value="1">One</option>                                              
+                                            <label for="area_id" class="form-label">Área de Destino</label>
+                                            <select name="area_id" class="form-control" required>
+                                                <option selected>Seleccione área</option>
+                                                @foreach ($areas as $area)
+                                                    <option value="{{ $area->id }}"
+                                                        {{ old('area_id') == $area->id ?  : '' }}>
+                                                        {{ $area->nombre }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="cedulapersona" class="form-label">Motivo</label>
-                                            <input type="number" class="form-control"
-                                                placeholder="Ingrese número de cédula" id="cedulapersona">
+                                            <label for="observaciones" class="form-label">Observaciones
+                                                (Opcional)</label>
+                                            <textarea name="observaciones" class="form-control" rows="3">{{ old('observaciones') }}</textarea>
                                         </div>
-
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger"
-                                            data-bs-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-primary">Guardar</button>
-                                    </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar Ingreso</button>
+                                </div>
+                                </form>
                             </div>
                         </div>
+                    </div>
 
+                    {{-- Tabla de Ingresos --}}
+                    <table id="example" class="display">
                         <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Cédula</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Área</th>
-                                <th>Observaciones</th>
-                                <th>Acciones</th>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Cédula</th>
+                                <th class="text-center">Área Actual</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Motivo</th>
+                                <th class="text-center">Fecha de Ingreso</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                               
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            @foreach ($ingresos as $ingreso)
+                                <tr class="text-center">
+                                    <td>{{ $ingreso->persona->nombre }} {{ $ingreso->persona->apellido }}</td>
+                                    <td>{{ $ingreso->persona->cedula }}</td>
+                                    <td>{{ $ingreso->area->nombre }}</td>
+                                    <td>
+                                        @if ($ingreso->estado == 'ingreso')
+                                            <span class="badge text-bg-success">Activo</span>
+                                        @else
+                                            <span class="badge text-bg-secondary">Terminado</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $ingreso->observaciones }}</td>
+                                    <td>{{ $ingreso->created_at->format('Y-m-d H:i') }}</td>
+                                    <td>
+                                        @if ($ingreso->estado == 'ingreso')
+                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                                data-bs-target="#editIngresoModal{{ $ingreso->id }}">
+                                                Editar Área
+                                            </button>
+
+                                            <form action="{{ route('ingresos.checkout', $ingreso->id) }}"
+                                                method="POST" style="display:inline;"
+                                                onsubmit="return confirm('¿Confirma la salida de {{ $ingreso->persona->nombre }}?');">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-danger btn-sm">Finalizar</button>
+                                            </form>
+                                        @else
+                                            <span class="text-muted">Finalizado</span>
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                {{-- Modal de Edición de Área (Solo si el ingreso está activo) --}}
+                                @if ($ingreso->estado == 'ingreso')
+                                    <div class="modal fade" id="editIngresoModal{{ $ingreso->id }}" tabindex="-1"
+                                        aria-labelledby="editIngresoModalLabel{{ $ingreso->id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5"
+                                                        id="editIngresoModalLabel{{ $ingreso->id }}">Editar Área para
+                                                        {{ $ingreso->persona->nombre }}</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="POST"
+                                                        action="{{ route('ingresos.update', $ingreso->id) }}">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <div class="mb-3">
+                                                            <label for="new_area_id" class="form-label">Actualizar Ingreso</label>
+                                                            <select name="area_id" class="form-control" required>
+                                                                @foreach ($areas as $area)
+                                                                    <option value="{{ $area->id }}"
+                                                                        {{ $ingreso->area_id == $area->id ? 'selected' : '' }}>
+                                                                        {{ $area->nombre }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="new_observaciones"
+                                                                class="form-label">Observaciones (Opcional)</label>
+                                                            <textarea name="observaciones" class="form-control" rows="3">{{ $ingreso->observaciones }}</textarea>
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Actualizar
+                                                        Área</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </tbody>
-                        
                     </table>
                 </div>
             </div>
         </div>
     </div>
 
+    @if ($errors->any() && old('personas_cedula'))
+        <script>
+            var createModal = new bootstrap.Modal(document.getElementById('createIngresoModal'));
+            createModal.show();
+        </script>
+    @endif
 </x-app-layout>

@@ -6,33 +6,40 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                    <h1 class="text-center">Historial de Ingresos</h1>
                     <table id="example" class="display">
-                        <h1 class="text-center">Historial Ingresos</h1>                                   
-                          <thead>
+                        <thead>
                             <tr>
-                                <th>Fecha</th>
-                                <th>Cédula</th>
                                 <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Cédula</th>
                                 <th>Área</th>
-                                <th>Observaciones</th>
+                                <th>Motivo</th>
+                                <th>Fecha y hora de Ingreso</th>
+                                <th>Fecha y hora de salida</th>
+
                                 <th>Estado</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            {{-- CORRECCIÓN: Iteramos sobre $historial en lugar de $ingresos --}}
+                            @foreach($historial as $ingreso)
+                                <tr>
+                                    <td>{{ $ingreso->persona->nombre }} {{ $ingreso->persona->apellido }}</td>
+                                    <td>{{ $ingreso->persona->cedula }}</td>
+                                    <td>{{ $ingreso->area->nombre }}</td>
+                                    <td>{{ $ingreso->observaciones }}</td>
+                                    <td>{{ $ingreso->created_at }}</td>
+                                     <td>{{ $ingreso->updated_at }}</td>
+                                    <td>
+                                        @if ($ingreso->estado == 'ingreso')
+                                            <span class="badge text-bg-success">ACTIVO</span>
+                                        @else
+                                            <span class="badge text-bg-secondary">TERMINADO</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
-                       
                     </table>
                 </div>
             </div>
